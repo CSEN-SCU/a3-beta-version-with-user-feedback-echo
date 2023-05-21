@@ -1,20 +1,23 @@
 {
-  "manifest_version": 3,
-  "name": "Hello Extensions",
-  "description": "COEN 296A A3",
-  "version": "1.0",
-  "action": {
-    "default_popup": "helloworld.html",
-    "default_icon": "helloworld.png"
-  },
-  "content_scripts": [
-    {
-      "js": ["helloworld.js"],
-      "matches": ["https://www.youtube.com/*"]
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Task Reminder",
+    "short_name":"TR v3.1",
+    "version": "3.1",
+    "manifest_version": 3,
+    "author":"Harish U Warrier",
+    "description": "A Simple Task Reminder",
+    "icons": { 
+        "48": "icon.png" 
+    },
+    "background": {       
+        "service_worker": "service_worker.js"       
+    },
+   
+    "permissions": ["storage", "notifications", "alarms","activeTab","tabs"],
+    "action": {
+        "default_title": "Task Reminder",
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
     }
-  ],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "permissions": ["storage", "activeTab", "scripting"]
 }
