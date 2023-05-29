@@ -48,6 +48,7 @@ const defaultState: RootState = {
     theme: Theme.Day,
     liveNoteEnabled: false,
     notificationsEnabled: true,
+    focusEnabled: false,
   },
   version: '0.0.0',
 }

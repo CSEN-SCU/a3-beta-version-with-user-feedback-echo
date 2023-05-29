@@ -2,13 +2,10 @@ import browser from 'webextension-polyfill'
 
 import type { RootState } from '@app/Store/'
 
-import packageInfo from '@package-info'
 import { ALARM_KEY, STORAGE_KEY, ContextMenuKeys } from '@app/Constants'
 import { migrate_v0_data_to_v1, getTodoCount, setBadgeText } from './utils/'
 import { notify, Notification } from './utils/notification'
 import { handle_context_menu } from './utils/context-menu'
-
-const { version } = packageInfo
 
 export const WHATS_NEW = ['Todo Notes ✅', 'Rich Text Editor Improvements']
 export const WHATS_UP = ['Folder Support', 'Sync Support']
@@ -20,6 +17,8 @@ export const WHATS_UP = ['Folder Support', 'Sync Support']
 /*
  * Install Events
  */
+
+//const site_list = ['https://*.youtube.com/*']
 
 browser.runtime.onInstalled.addListener(initialize_install_events)
 
@@ -35,7 +34,7 @@ function initialize_install_events(
     return
   }
 
-  console.log('initing install events ', version)
+  console.log('initing install events ')
   // migrating v0.x => v1.x data
   // mostly harmless migration - removing unwanted keys
   // we don't have to wait for migration - fire and forget!!!
@@ -46,7 +45,7 @@ function initialize_install_events(
   // welcome message
   const welcome_message = {
     id: 'welcome-message',
-    title: `Remindoro - ${version} !`,
+    title: `Web Task Reminder`,
     note: ` Welcome `,
   }
 
@@ -79,6 +78,7 @@ async function getLocalStorageData() {
 function init_extension_events() {
   show_alarms()
   show_todo_badge()
+  block()
 }
 
 /*
@@ -151,6 +151,34 @@ function show_alarms() {
   })
 }
 
+function block() {
+  browser.tabs.onActivated.addListener(async activeInfo => {
+    try {
+      const remindoroData = await getLocalStorageData()
+
+      let showFocus: boolean | undefined = remindoroData.settings.focusEnabled
+      if (showFocus === undefined) {
+        showFocus = false
+      }
+
+      if (showFocus == true) {
+        let queryOptions = { active: true, lastFocusedWindow: true }
+        let [tab] = await browser.tabs.query(queryOptions) //const name: string = tab.url as string
+        if (tab.url?.includes('youtube.com/')) {
+          console.log(activeInfo.tabId)
+          console.log(tab.id)
+          await browser.scripting.executeScript({
+            target: { tabId: activeInfo.tabId },
+            files: ['content.js'],
+          })
+          console.log(tab.url)
+        }
+      }
+    } catch (e) {
+      //some err
+    }
+  })
+}
 /*
  * Init context menus
  */
@@ -164,7 +192,7 @@ function init_context_menus() {
     {
       id: ContextMenuKeys.SAVE_LINK,
       contexts: ['page', 'link'],
-      title: 'Add to Remindoro',
+      title: 'Add to tasks',
     },
     () => {
       console.log('context menu created for "Add to Page" ')
@@ -176,7 +204,7 @@ function init_context_menus() {
     {
       id: ContextMenuKeys.SAVE_HIGHLIGHT,
       contexts: ['selection'],
-      title: 'Save Text to Remindoro',
+      title: 'Save Text',
     },
     () => {
       console.log('context menu created for "Save Text" ')

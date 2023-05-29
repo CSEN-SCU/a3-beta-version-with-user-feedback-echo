@@ -1,7 +1,7 @@
 export enum Theme {
   Day = 'Day',
   Night = 'Night',
-  Rainbow = 'Rainbow',
+  Rainbow = 'Other',
 }
 
 export interface ThemeInterface {

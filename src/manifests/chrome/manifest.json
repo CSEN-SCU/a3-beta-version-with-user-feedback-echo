@@ -7,7 +7,7 @@
     "name": "remindoro",
     "version": "1.0.0",
     "manifest_version": 3,
-    "description": "Better Reminders in your browser",
+    "description": "A Web Task Reminder in your browser",
     "icons": {
         "16": "img/remindoro-icon-16.png",
         "128": "img/remindoro-icon.png"
@@ -21,7 +21,10 @@
         "contextMenus",
         "notifications",
         "storage",
-        "unlimitedStorage"
+        "unlimitedStorage",
+        "tabs",
+        "activeTab",
+        "scripting"
     ],
     "host_permissions": [
         "http://*/*",

@@ -6,12 +6,14 @@ export interface SettingsState {
   theme: Theme
   liveNoteEnabled: boolean
   notificationsEnabled: boolean
+  focusEnabled: boolean
 }
 
 const initialState: SettingsState = {
   theme: Theme.Day,
   liveNoteEnabled: false,
   notificationsEnabled: true,
+  focusEnabled: false,
 }
 
 export const settingsSlice = createSlice({
@@ -43,11 +45,24 @@ export const settingsSlice = createSlice({
       const { value } = action.payload
       state.notificationsEnabled = value
     },
+
+    setFocusStatus: (
+      state,
+      action: PayloadAction<{ id: string; value: boolean }>
+    ) => {
+      // dummy id passed to match the api of 'lazy store update'
+      const { value } = action.payload
+      state.focusEnabled = value
+    },
   },
 })
 
 // export actions
-export const { setTheme, setLiveNoteStatus, setNotificationsStatus } =
-  settingsSlice.actions
+export const {
+  setTheme,
+  setLiveNoteStatus,
+  setNotificationsStatus,
+  setFocusStatus,
+} = settingsSlice.actions
 
 export default settingsSlice.reducer
