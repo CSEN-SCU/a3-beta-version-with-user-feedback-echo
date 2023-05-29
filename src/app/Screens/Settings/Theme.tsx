@@ -41,7 +41,7 @@ function ThemeSetting() {
           </FormControl>
         </div>
       </div>
-      <div className={'subtitle'}>{}</div>
+      <div className={'subtitle'}>{'select themes'}</div>
     </Holder>
   )
 }

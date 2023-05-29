@@ -1,7 +1,7 @@
 {
-  "name": "remindoro",
-  "version": "1.2.3",
-  "description": "Better Reminders in browser",
+  "name": "webtasktrack",
+  "version": "1.0.0",
+  "description": "A simple web tsk tracker",
   "scripts": {
     "test": "vitest",
     "start:chrome": "yarn dedupe-pkg; npm run chrome-launch",
@@ -33,10 +33,6 @@
     "reminders",
     "browser reminders"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/palerdot/remindoro.git"
-  },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
