@@ -18,7 +18,18 @@ export const WHATS_UP = ['Folder Support', 'Sync Support']
  * Install Events
  */
 
-//const site_list = ['https://*.youtube.com/*']
+const site_list = [
+  'facebook.com',
+  'youtube.com',
+  'twitter.com',
+  'reddit.com',
+  'hulu.com',
+  'www.facebook.com',
+  'www.youtube.com',
+  'www.twitter.com',
+  'www.reddit.com',
+  'www.hulu.com',
+]
 
 browser.runtime.onInstalled.addListener(initialize_install_events)
 
@@ -164,7 +175,8 @@ function block() {
       if (showFocus == true) {
         let queryOptions = { active: true, lastFocusedWindow: true }
         let [tab] = await browser.tabs.query(queryOptions) //const name: string = tab.url as string
-        if (tab.url?.includes('youtube.com/')) {
+        if (site_list.some(el => tab.url?.includes(el))) {
+          // tab.url?.includes('youtube.com/')
           console.log(activeInfo.tabId)
           console.log(tab.id)
           await browser.scripting.executeScript({

@@ -58,7 +58,14 @@ function Focus() {
           />
         </div>
       </div>
-      <div className={'subtitle'}>{'Enable/Resume'}</div>
+
+      <div className={'subtitle'}>
+        {'Blocked Sites:'}
+        <p>{'www.facebook.com'}</p>
+        <p>{'www.youtube.com'}</p>
+        <p>{'www.reddit.com'}</p>
+        <p>{'www.hulu.com'}</p>
+      </div>
     </Holder>
   )
 }
