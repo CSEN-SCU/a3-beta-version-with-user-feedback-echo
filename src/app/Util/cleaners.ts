@@ -6,6 +6,7 @@ import {
   Remindoro,
   RemindoroType,
   Reminder as ReminderType,
+  RemindoroLevelType,
 } from '@app/Store/Slices/Remindoros/'
 
 /*
@@ -60,6 +61,8 @@ export interface OldRemindoro {
   title: string
   type: string
   note: string
+  myurl: string
+  mytype: string
   list?: Array<string>
   created: number
   updated: number
@@ -121,6 +124,8 @@ export function clean_v0_data(remindoro: OldRemindoro): Remindoro {
       id: String(remindoro.id),
       title: clean_html(remindoro.title), // strip html
       note: clean_html(remindoro.note), // strip html
+      myurl: remindoro.myurl,
+      mytype: RemindoroLevelType.LEVEL1,
       type: RemindoroType.Note,
       created: remindoro.created,
       updated: remindoro.updated,

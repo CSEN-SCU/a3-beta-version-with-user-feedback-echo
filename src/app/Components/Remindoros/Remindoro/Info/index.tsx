@@ -11,6 +11,7 @@ import SettingsModal from '@app/Components/Remindoros/Remindoro/Info/SettingsMod
 import Edit from '@app/Components/Remindoros/Remindoro/EditFab'
 import Title from './Title'
 import LiveNote from '@app/Components/LiveNote/'
+import MyUrl from './MyUrl'
 
 const Holder = styled.div`
   display: flex;
@@ -100,7 +101,7 @@ function Info({ remindoroId }: Props) {
     return <div>{'Loading ... '}</div>
   }
 
-  const { id, title, note, reminder, isTodo } = remindoro
+  const { id, title, note, reminder, isTodo, myurl, mytype } = remindoro
 
   return (
     <Holder>
@@ -111,10 +112,14 @@ function Info({ remindoroId }: Props) {
             <TodoBadge />
           </div>
         )}
+        <div className="todo-status">{mytype}</div>
       </div>
 
       <div className={'title-holder'}>
         <Title id={id} title={title} />
+      </div>
+      <div className={'title-holder'}>
+        <MyUrl id={id} myurl={myurl} />
       </div>
       <div className={'note-holder'}>
         <LiveNote id={id} note={note} readOnly={false} />

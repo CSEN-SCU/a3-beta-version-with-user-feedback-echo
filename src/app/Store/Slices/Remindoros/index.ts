@@ -28,11 +28,20 @@ export enum RemindoroType {
   Note = 'note',
 }
 
+export enum RemindoroLevelType {
+  LEVEL1 = 'LEVEL1',
+  LEVEL2 = 'LEVEL2',
+  LEVEL3 = 'LEVEL3',
+  LEVEL4 = 'LEVEL4',
+  LEVEL5 = 'LEVEL5',
+}
+
 export interface Remindoro {
   id: string
   title: string
   note: string
-
+  myurl: string
+  mytype: RemindoroLevelType
   // NOTE: we have to see the usage of this property
   type: RemindoroType.Note
   // marking note as todo
@@ -67,6 +76,8 @@ export const remindoroSlice = createSlice({
         note: `
 Some notes here
 `,
+        myurl: 'https://www.google.com',
+        mytype: RemindoroLevelType.LEVEL1,
         type: RemindoroType.Note,
         reminder: {
           time: dayjs().add(45, 'minutes').valueOf(),
@@ -89,6 +100,8 @@ Some notes here
         id,
         title: '',
         note: '',
+        myurl: '',
+        mytype: RemindoroLevelType.LEVEL1,
         type: RemindoroType.Note,
         created: Date.now(),
         updated: Date.now(),
@@ -122,6 +135,51 @@ Some notes here
       toUpdate.updated = Date.now()
     },
 
+    // update myurl
+    updateMyUrl: (state, action: StorePayload<string>) => {
+      const { id, value } = action.payload
+      // extract remindoro
+      const toUpdate: Maybe<Remindoro> = state.find(ro => ro.id === id)
+
+      // if for some reason, we cannot find remindoro to update,
+      // we will return the state as is
+      if (isNil(toUpdate)) {
+        return state
+      }
+
+      // compare value before update
+      if (isEqual(toUpdate.title, value)) {
+        // return current state
+        return state
+      }
+
+      // we will update the title
+      toUpdate.myurl = value
+      // update 'updated' time
+      toUpdate.updated = Date.now()
+    },
+    updateMyType: (state, action: StorePayload<RemindoroLevelType>) => {
+      const { id, value } = action.payload
+      // extract remindoro
+      const toUpdate: Maybe<Remindoro> = state.find(ro => ro.id === id)
+
+      // if for some reason, we cannot find remindoro to update,
+      // we will return the state as is
+      if (isNil(toUpdate)) {
+        return state
+      }
+
+      // compare value before update
+      if (isEqual(toUpdate.title, value)) {
+        // return current state
+        return state
+      }
+
+      // we will update the title
+      toUpdate.mytype = value
+      // update 'updated' time
+      toUpdate.updated = Date.now()
+    },
     // update note
     updateNote: (state, action: StorePayload<string>) => {
       const { id, value } = action.payload
@@ -224,6 +282,8 @@ export const {
   updateTodo,
   deleteRemindoro,
   migrateV1Remindoros,
+  updateMyUrl,
+  updateMyType,
 } = remindoroSlice.actions
 
 export default remindoroSlice.reducer

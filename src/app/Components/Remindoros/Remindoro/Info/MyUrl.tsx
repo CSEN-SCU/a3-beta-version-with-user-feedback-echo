@@ -3,12 +3,12 @@ import { isEqual } from '@lodash'
 import { TextField } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-import { updateTitle } from '@app/Store/Slices/Remindoros'
+import { RemindoroLevelType, updateMyUrl } from '@app/Store/Slices/Remindoros'
 import { useLazyStoreUpdate } from '@app/Hooks/'
 
 type Props = {
   id: string
-  title: string
+  myurl: string
 }
 
 const StyledTextField: typeof TextField = styled(TextField)(({ theme }) => ({
@@ -20,11 +20,11 @@ const StyledTextField: typeof TextField = styled(TextField)(({ theme }) => ({
   },
 }))
 
-function Title({ id, title }: Props) {
+function MyUrl({ id, myurl }: Props) {
   const { value, setValue } = useLazyStoreUpdate<string>({
     id,
-    payload: title,
-    updater: updateTitle,
+    payload: myurl || RemindoroLevelType.LEVEL1,
+    updater: updateMyUrl,
   })
 
   return (
@@ -34,7 +34,7 @@ function Title({ id, title }: Props) {
       color={'primary'}
       fullWidth
       type="text"
-      placeholder={'Add Title here'}
+      placeholder={'Add My Url here'}
       value={value}
       onChange={e => {
         setValue(currentTitle => {
@@ -48,4 +48,4 @@ function Title({ id, title }: Props) {
   )
 }
 
-export default Title
+export default MyUrl

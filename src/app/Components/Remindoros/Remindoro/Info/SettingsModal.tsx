@@ -14,6 +14,7 @@ import { deleteRemindoro } from '@app/Store/Slices/Remindoros'
 import ConfirmDeleteModal from './ConfirmDeleteModal'
 import Reminder from './Reminder/'
 import MarkTodo from './MarkTodo'
+import MarkMyType from './MarkMyType'
 
 const PREFIX = 'SettingsModal'
 
@@ -93,6 +94,7 @@ function SettingsModal({ isModalOpen, setModalStatus, remindoro }: Props) {
         <Holder>
           <Reminder id={remindoro.id} reminder={remindoro.reminder} />
           <MarkTodo id={remindoro.id} isTodo={remindoro.isTodo} />
+          <MarkMyType id={remindoro.id} level={remindoro.mytype} />
           <ActionBar>
             <Button
               variant="contained"
