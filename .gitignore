@@ -25,3 +25,5 @@ app/styles
 
 *.tsbuildinfo
 yarn.lock
+.tool-versions
+package.lock.json
