@@ -6,6 +6,27 @@
   src: url(./fonts/material-fonts.woff2) format('woff2');
 }
 
+@font-face {
+  font-family: 'Yellowtail';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Yellowtail'), url(https://fonts.gstatic.com/s/yellowtail/v12/OZpGg_pnoDtINPfRIlLotlw.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Comic Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./fonts/comici.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'BRADHI';
+  font-style: normal;
+  font-weight: 400;
+  src: url(./fonts/BRADHI.ttf) format('truetype');
+}
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;

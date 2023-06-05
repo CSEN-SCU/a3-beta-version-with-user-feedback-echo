@@ -1,7 +1,8 @@
 export enum Theme {
   Day = 'Day',
   Night = 'Night',
-  Rainbow = 'Other',
+  Rainbow = 'Light',
+  Dev_theme = 'Pastel',
 }
 
 export interface ThemeInterface {
@@ -76,7 +77,6 @@ export const themes: Themes = {
     danger: '#F06262',
   },
 
-  /* Rainbow THEME */
   [Theme.Rainbow]: {
     background: '#ADE4DB',
     borderDark: '#C5E8E1', // middle of background/backgroundLight
@@ -95,6 +95,26 @@ export const themes: Themes = {
     contrastTextColor: '#E3CACA',
     success: '#57B557',
     danger: '#F06262',
+  },
+
+  [Theme.Dev_theme]: {
+    background: '#FFF2D9',
+    borderDark: '#FFDABF',
+    backgroundLight: '#D1DCE5',
+    border: '#7FB8E3',
+    primary: '#F79256',
+    primaryDark: '#FFB59C',
+    primaryLight: '#C2E0FF',
+    highlight: '#F79256',
+    highlightTextColor: '#D1DCE5',
+    textColor: '#4A4444',
+
+    /* grey: text color -> contrast color */
+    greyOne: '#BEBEBE',
+
+    contrastTextColor: '#B06D5C',
+    success: '#71C671',
+    danger: '#E57373',
   },
 }
 
