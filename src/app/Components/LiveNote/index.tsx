@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 import { debounce, isEqual, DebouncedFunc } from '@lodash'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import Slite, { Editor } from 'react-slite'
 
-import type { RootState } from '@app/Store/'
+//import type { RootState } from '@app/Store/'
 
 import { updateNote } from '@app/Store/Slices/Remindoros'
 import ActionBar from './ActionBar'
@@ -58,9 +58,7 @@ interface WrapperProps extends Props {
 }
 
 const NoteWrapper = ({ id, note, readOnly, lazyUpdate }: WrapperProps) => {
-  const liveNoteEnabled = useSelector((state: RootState) => {
-    return state.settings.liveNoteEnabled
-  })
+  const liveNoteEnabled = false
 
   return (
     <BackupEditor id={id} readOnly={readOnly} note={note} onChange={lazyUpdate}>

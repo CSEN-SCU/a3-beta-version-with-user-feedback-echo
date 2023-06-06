@@ -34,6 +34,7 @@ export const settingsSlice = createSlice({
       // dummy id passed to match the api of 'lazy store update'
       const { value } = action.payload
       state.liveNoteEnabled = value
+      state.liveNoteEnabled = false
     },
 
     // enables/disables notification

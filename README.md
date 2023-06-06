@@ -4,6 +4,6 @@ for the first time:
     - run "npm i" in the terminal 
     - run "npm run chrome-build"
     - unzip the file under release folder
-    - load unpacked the remindoro-chrome-v1.0.0 file in chrome extension
+    - load unpacked extension-chrome-v1.0.0 file in chrome extension
 for running after first time
     - run "npm run chrome-build"

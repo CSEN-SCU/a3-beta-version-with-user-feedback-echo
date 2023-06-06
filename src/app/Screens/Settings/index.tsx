@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import Notifications from './Notifications'
 import Theme from './Theme'
-import LiveNote from './LiveNote'
 
 const Wrapper = styled.div`
   & .page-heading {
@@ -44,7 +43,6 @@ function Settings() {
       <div className={'page-heading'}>{'Settings'}</div>
       <Notifications />
       <Theme />
-      <LiveNote />
     </Wrapper>
   )
 }

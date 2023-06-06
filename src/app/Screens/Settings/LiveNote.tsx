@@ -34,7 +34,6 @@ function Notifications() {
           />
         </div>
       </div>
-      <div className={'subtitle'}>{'Enable/Disable.'}</div>
     </Holder>
   )
 }
