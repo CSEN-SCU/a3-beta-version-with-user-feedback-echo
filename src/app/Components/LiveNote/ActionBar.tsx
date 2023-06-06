@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Toolbar from './Toolbar'
-import ToggleSwitch from './ToggleSwitch'
 
 type Props = {
   liveNoteEnabled: boolean
@@ -21,7 +20,6 @@ function ActionBar({ liveNoteEnabled }: Props) {
   return (
     <Wrapper>
       <div>{liveNoteEnabled && <Toolbar />}</div>
-      <ToggleSwitch checked={liveNoteEnabled} />
     </Wrapper>
   )
 }

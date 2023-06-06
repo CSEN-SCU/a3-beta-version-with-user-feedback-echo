@@ -4,7 +4,7 @@
  * This file will be parsed, replaced with package.json version and copied to final build folder
  */
 {
-    "name": "remindoro",
+    "name": "web task tracker",
     "version": "1.0.0",
     "manifest_version": 3,
     "description": "A Web Task Reminder in your browser",
@@ -36,7 +36,7 @@
             "19": "img/remindoro-icon-19.png",
             "38": "img/remindoro-icon-38.png"
         },
-        "default_title": "Remindoro",
+        "default_title": "web task tracker",
         "default_popup": "popup.html"
     }
 }

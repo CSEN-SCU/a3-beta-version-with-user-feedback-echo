@@ -43,7 +43,7 @@ const { zip } = require('zip-a-folder')
 
 const npm_version = process.env.npm_package_version
 const browser = argv.browser
-const release_zip_name = `remindoro-${browser}-v${npm_version}.zip`
+const release_zip_name = `extension-${browser}-v${npm_version}.zip`
 
 if (!['firefox', 'chrome'].includes(browser)) {
   console.log('firefox/chrome browser not specified for prod build'.red.bold)
@@ -132,7 +132,7 @@ checkBrowsers(paths.appPath, isInteractive)
   )
   .then(() => {
     console.log(
-      chalk.yellow(`Creating Remindoro zip archive => ${npm_version}`)
+      chalk.yellow(`Creating app zip archive => ${npm_version}`)
     )
     return zip(paths.appExtension, `${paths.appRelease}/${release_zip_name}`)
   })
