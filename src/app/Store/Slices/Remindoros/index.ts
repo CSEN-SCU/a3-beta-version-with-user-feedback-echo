@@ -46,6 +46,7 @@ export interface Remindoro {
   type: RemindoroType.Note
   // marking note as todo
   isTodo?: boolean
+  isToBlock?: boolean
 
   // unix timestamp
   created: number
@@ -86,6 +87,7 @@ Some notes here
             interval: 'minutes',
           },
         },
+        isToBlock: false,
         created: Date.now(),
         updated: Date.now(),
       }

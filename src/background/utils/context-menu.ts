@@ -17,6 +17,7 @@ export function handle_context_menu(
   const context_id = menu_details.menuItemId
   const save_link_action = context_id === ContextMenuKeys.SAVE_LINK
   const highlight_action = context_id === ContextMenuKeys.SAVE_HIGHLIGHT
+  const block_link_action = context_id === ContextMenuKeys.BLOCK_LINK
 
   const title = tab_details?.title
   const url = tab_details?.url
@@ -41,6 +42,14 @@ export function handle_context_menu(
     return
   }
 
+  if (block_link_action) {
+    block_link({
+      title,
+      url,
+    })
+    return
+  }
+
   return
 }
 
@@ -49,11 +58,14 @@ interface ContextAction {
   url?: string
   myurl?: string
   mytype?: RemindoroLevelType
+  isToBlock?: boolean
 }
 
 interface HighlightAction extends ContextAction {
   highlight?: string
 }
+
+interface BlockAction extends ContextAction {}
 
 // save new link to remindoro
 function save_link({ title, url, myurl, mytype }: ContextAction) {
@@ -67,6 +79,7 @@ function save_link({ title, url, myurl, mytype }: ContextAction) {
     myurl: myurl || '',
     mytype: mytype || RemindoroLevelType.LEVEL1,
     type: RemindoroType.Note,
+    isToBlock: false,
     created: Date.now(),
     updated: Date.now(),
   }
@@ -118,6 +131,7 @@ function save_highlight({
     myurl: myurl || '',
     mytype: mytype || RemindoroLevelType.LEVEL1,
     type: RemindoroType.Note,
+    isToBlock: false,
     created: Date.now(),
     updated: Date.now(),
   }
@@ -138,6 +152,48 @@ function save_highlight({
             id: 'new-highlight-saved',
             title: 'Text Saved',
             note: `saved successfully`,
+          })
+        },
+        // not able to save the link
+        onError: () => {},
+      })
+    },
+    // not able to save the link
+    onError: () => {},
+  })
+}
+function block_link({ title, url, myurl, mytype }: BlockAction) {
+  const newBlock = {
+    id: uuid(),
+    title: title || `${url}`,
+    // markdown note
+    note: `
+[To Block](${url})
+    `,
+    myurl: myurl || `${url}`,
+    mytype: mytype || RemindoroLevelType.LEVEL1,
+    type: RemindoroType.Note,
+    isToBlock: true,
+    created: Date.now(),
+    updated: Date.now(),
+  }
+
+  // we have to save this new remindoro to store
+  loadFromStorage({
+    onSuccess: currentData => {
+      const updatedData = {
+        ...currentData,
+        remindoros: [...currentData.remindoros, newBlock],
+      }
+      // we have to sync the updated data
+      syncToStorage({
+        currentState: updatedData,
+        onSuccess: () => {
+          // we have to notify a new link is saved
+          notify({
+            id: 'new-link-toblock',
+            title: 'Link blocked',
+            note: `${url} to block saved successfully`,
           })
         },
         // not able to save the link

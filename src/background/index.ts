@@ -6,6 +6,7 @@ import { ALARM_KEY, STORAGE_KEY, ContextMenuKeys } from '@app/Constants'
 import { migrate_v0_data_to_v1, getTodoCount, setBadgeText } from './utils/'
 import { notify, Notification } from './utils/notification'
 import { handle_context_menu } from './utils/context-menu'
+// import { useSelector } from 'react-redux'
 
 export const WHATS_NEW = ['Todo Notes ✅', 'Rich Text Editor Improvements']
 export const WHATS_UP = ['Folder Support', 'Sync Support']
@@ -18,18 +19,18 @@ export const WHATS_UP = ['Folder Support', 'Sync Support']
  * Install Events
  */
 
-const site_list = [
-  'facebook.com',
-  'youtube.com',
-  'twitter.com',
-  'reddit.com',
-  'hulu.com',
-  'www.facebook.com',
-  'www.youtube.com',
-  'www.twitter.com',
-  'www.reddit.com',
-  'www.hulu.com',
-]
+// const site_list = [
+//   'facebook.com',
+//   'youtube.com',
+//   'twitter.com',
+//   'reddit.com',
+//   'hulu.com',
+//   'www.facebook.com',
+//   'www.youtube.com',
+//   'www.twitter.com',
+//   'www.reddit.com',
+//   'www.hulu.com',
+// ]
 
 browser.runtime.onInstalled.addListener(initialize_install_events)
 
@@ -166,7 +167,16 @@ function block() {
   browser.tabs.onActivated.addListener(async activeInfo => {
     try {
       const remindoroData = await getLocalStorageData()
-
+      const remindoros = remindoroData.remindoros
+      //     const remindoro: Maybe<Remindoro> = useSelector((remindoros : RootState) =>
+      //     state.remindoros.find(ro => String(ro.myurl) === remindoroId)
+      // )
+      console.log(remindoros)
+      const blockedRemindoros = remindoros.filter(
+        remindoro => remindoro.isToBlock
+      )
+      // Log the blocked remindoros
+      console.log(blockedRemindoros)
       let showFocus: boolean | undefined = remindoroData.settings.focusEnabled
       if (showFocus === undefined) {
         showFocus = false
@@ -175,7 +185,7 @@ function block() {
       if (showFocus == true) {
         let queryOptions = { active: true, lastFocusedWindow: true }
         let [tab] = await browser.tabs.query(queryOptions) //const name: string = tab.url as string
-        if (site_list.some(el => tab.url?.includes(el))) {
+        if (blockedRemindoros.some(el => tab.url?.includes(el.myurl))) {
           // tab.url?.includes('youtube.com/')
           console.log(activeInfo.tabId)
           console.log(tab.id)
@@ -220,6 +230,17 @@ function init_context_menus() {
     },
     () => {
       console.log('context menu created for "Save Text" ')
+    }
+  )
+
+  browser.contextMenus.create(
+    {
+      id: ContextMenuKeys.BLOCK_LINK,
+      contexts: ['page', 'link'],
+      title: 'Block link',
+    },
+    () => {
+      console.log('context menu created for "Block link" ')
     }
   )
 }
