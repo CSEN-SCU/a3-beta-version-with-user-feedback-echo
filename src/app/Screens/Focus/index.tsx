@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
-
+import { useBlockedSiteList } from '@app/Store/Slices/Remindoros'
 import type { RootState } from '@app/Store/'
 import { setFocusStatus } from '@app/Store/Slices/Settings'
 import { useLazyStoreUpdate } from '@app/Hooks/'
@@ -36,13 +36,12 @@ function Focus() {
   const isFocusEnabled = useSelector(
     (state: RootState) => state.settings.focusEnabled
   )
-
+  const blocked_url = useBlockedSiteList()
   const { value: isEnabled, setValue } = useLazyStoreUpdate<boolean>({
     id: 'dummy-id',
     payload: isFocusEnabled,
     updater: setFocusStatus,
   })
-
   return (
     <Holder>
       <div className={'setting-wrapper'}>
@@ -61,10 +60,11 @@ function Focus() {
 
       <div className={'subtitle'}>
         {'Blocked Sites:'}
-        <p>{'www.facebook.com'}</p>
-        <p>{'www.youtube.com'}</p>
-        <p>{'www.reddit.com'}</p>
-        <p>{'www.hulu.com'}</p>
+        <ul>
+          {blocked_url.map(item => {
+            return <li key={item.myurl}>{item.myurl}</li>
+          })}
+        </ul>
       </div>
     </Holder>
   )

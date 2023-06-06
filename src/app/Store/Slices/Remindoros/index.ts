@@ -305,3 +305,11 @@ export function useTodoRemindoros() {
 export function useTodoCount() {
   return useTodoRemindoros().length
 }
+export function useBlockedSiteList() {
+  const remindoros = useRemindoros()
+  const blockedRemindoros = remindoros.filter(remindoro => remindoro.isToBlock)
+  return blockedRemindoros
+}
+export function useDeleteRemindoro(id: any) {
+  return deleteRemindoro(id)
+}
